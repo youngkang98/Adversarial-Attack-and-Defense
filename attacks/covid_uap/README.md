@@ -1,4 +1,22 @@
-# UAP-COVID-Net
+# attacks/covid_uap/
+
+UAP attacks evaluated on COVID-Net chest X-ray classifier using IBM ART.
+
+## Scripts (post-reorganization names)
+
+| Script | Original name | Description |
+|---|---|---|
+| `covid_eval_framework.py` | `uap_utils.py` | ART-based evaluation driver |
+| `generate_uap_nontargeted.py` | `generate_nontargeted_uap.py` | Non-targeted UAP generation |
+| `generate_uap_targeted.py` | `generate_targeted_uap.py` | Targeted UAP generation |
+| `eval.py` | `eval.py` | Standalone evaluation |
+| `generate_random_uap.py` | — | Random baseline perturbation |
+
+ART library lives in `third_party/art_/`.
+
+---
+
+# UAP-COVID-Net (original README)
 This repository contains the codes used in our study on [*Vulnerability of deep neural networks for detecting COVID-19 cases from chest X-ray images to universal adversarial attacks*](https://doi.org/10.1371/journal.pone.0243963).
 
 ## Terms of use
