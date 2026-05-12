@@ -300,8 +300,8 @@ def get_dataloader(opt, train=True,trainOrTestData='Train', pretensor_transform=
         elif trainOrTestData == 'Test':
             dataset = DatasetSeprateByClass(test_data_path, testfile, 'test_data', transform=transform, one_hot_encode= False, num_classes=4)
     elif opt.dataset == 'CXRAY':
-        train_data_path = 'C:/Users/lkang/Documents/chest_xray/train'
-        test_data_path = 'C:/Users/lkang/Documents/chest_xray/test'
+        train_data_path = 'data/cxray/train'
+        test_data_path = 'data/cxray/test'
         testfile = 'data/splits/cxray/CXRAY-test.csv'
         trainFile = 'data/splits/cxray/CXRAY-train.csv'
         if trainOrTestData == 'Train':

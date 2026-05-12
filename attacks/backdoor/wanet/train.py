@@ -308,11 +308,12 @@ def eval(
         best_cross_acc = acc_cross
     else:
         best_cross_acc = torch.tensor([0])
-    if best_bd and best_clean:
+    if (attack and best_bd and best_clean) or (not attack and best_clean):
         best_clean_acc = acc_clean
         print(f"Clean Accuracy {acc_clean} replacing {best_clean_acc} of the model!")
-        best_bd_acc = acc_bd
-        print(f"BD Accuracy {acc_bd} replacing {best_bd_acc} of the model!")
+        if attack:
+            best_bd_acc = acc_bd
+            print(f"BD Accuracy {acc_bd} replacing {best_bd_acc} of the model!")
         state_dict = {
             "netC": netC.state_dict(),
             "schedulerC": schedulerC.state_dict(),
@@ -410,8 +411,6 @@ def main():
     # Dataset
     train_dl = get_dataloader(opt, True,trainOrTestData='Train')
     test_dl = get_dataloader(opt, False,trainOrTestData='Test')
-    
-    attack = True
 
     # prepare model
     netC, optimizerC, schedulerC = get_model(opt)
@@ -468,7 +467,7 @@ def main():
 
     for epoch in range(epoch_current, opt.n_iters):
         print("Epoch {}:".format(epoch + 1))
-        train(netC, optimizerC, schedulerC, train_dl, noise_grid, identity_grid, tf_writer, epoch, opt,attack)
+        train(netC, optimizerC, schedulerC, train_dl, noise_grid, identity_grid, tf_writer, epoch, opt, True)
         best_clean_acc, best_bd_acc, best_cross_acc = eval(
             netC,
             optimizerC,
@@ -482,7 +481,7 @@ def main():
             tf_writer,
             epoch,
             opt,
-            attack
+            True
         )
 
 

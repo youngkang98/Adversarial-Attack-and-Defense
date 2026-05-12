@@ -29,7 +29,6 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
-from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -191,11 +190,9 @@ def generate_classification_report(true_labels, pred_labels,fileName):
 # -------------------------------------------------------
 # Parameters need to change
 
-datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-train_data_path = '../chest_xray/train'
-test_data_path = '../chest_xray/test'
+train_data_path = 'data/cxray/train'
+test_data_path = 'data/cxray/test'
 
-trainfile = 'data/splits/isic2019/ISIC2019_train.csv'
 testfile = 'data/splits/cxray/CXRAY-test.csv'
 adversarialFile = 'data/splits/cxray/CXRAY-train.csv'
 
@@ -208,9 +205,8 @@ image_count = 1773
 # List of numbers of images to use for noise 
 image_counts = [525,473,420,368,315,263,210,158,105,53]
 
-# checkpoint
-# checkpoint = torch.load('C:/Users/lkang/Documents/ISIC_Model/Acc70_advtrain_epoch100_BS32_3class/checkpoint.pth',map_location ='cpu')
-checkpoint = torch.load('../ChestX-ray_model/chest_xray_epoch100_BS16.pth',map_location ='cpu')
+# checkpoint — produced by: PYTHONPATH=. python models/train_baseline.py --dataset CXRAY
+checkpoint = torch.load('checkpoints/cxray/cxray_clean_baseline.pth.tar',map_location ='cpu')
 
 iterations = [25]
 eps = [0.04]
@@ -247,22 +243,20 @@ device = 'cuda'
 model = resnet50()
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 model = model.to(device)
-model.load_state_dict(checkpoint['model_state_dict'])
-# model.load_state_dict(checkpoint['netC'])
+model.load_state_dict(checkpoint['netC'])
 model.eval()
 
 
 # Define the loss function and the optimizer
 criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), 1e-3, momentum=0.9, weight_decay=5e-4)
-optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-# optimizer.load_state_dict(checkpoint['optimizerC'])
+optimizer.load_state_dict(checkpoint['optimizerC'])
 
 # Create the ART classifier
 classifier = PyTorchClassifier(
     model=model,
     loss=criterion,
-    input_shape=(3,256,256),
+    input_shape=(3,224,224),
     optimizer=optimizer,
     nb_classes=num_classes,
     device_type='gpu',
