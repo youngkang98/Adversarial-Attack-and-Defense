@@ -374,8 +374,8 @@ test2(model,eval_loader,"clean")
 val_loss_no_noise, val_acc_no_noise, true_labels, pred_labels = evaluate(classifier, eval_loader, criterion, device,remap=remap)
 print(f"Without Noise - Val Loss: {val_loss_no_noise:.4f} - Val Acc: {val_acc_no_noise:.2f}%")
 plot_confusion_matrix(true_labels, pred_labels, "confusion_matrix_clean_before_advtrain")
-save_results_to_file("clean_reuslt.txt",val_loss_no_noise,val_acc_no_noise, 0, 0,0,targeted=False)
-classificationReportFileName = 'classification_report_clean_before_advtrain.txt'
+save_results_to_file("results/isic/clean_reuslt.txt",val_loss_no_noise,val_acc_no_noise, 0, 0,0,targeted=False)
+classificationReportFileName = 'results/isic/classification_report_clean_before_advtrain.txt'
 generate_classification_report(true_labels,pred_labels,classificationReportFileName)
 
 
@@ -443,8 +443,8 @@ success_rate = 0
 val_loss_no_noise, val_acc_no_noise, true_labels, pred_labels = evaluate(classifier, eval_loader, criterion, device,remap=remap)
 print(f"Without Noise - Val Loss: {val_loss_no_noise:.4f} - Val Acc: {val_acc_no_noise:.2f}%")
 plot_confusion_matrix(true_labels, pred_labels, "confusion_matrix_clean_after_advtrain")
-save_results_to_file("clean_reuslt.txt",val_loss_no_noise,val_acc_no_noise, 0, 0, 0,targeted=False)
-classificationReportFileName = 'classification_report_clean_after_advtrain.txt'
+save_results_to_file("results/isic/clean_reuslt.txt",val_loss_no_noise,val_acc_no_noise, 0, 0, 0,targeted=False)
+classificationReportFileName = 'results/isic/classification_report_clean_after_advtrain.txt'
 generate_classification_report(true_labels,pred_labels,classificationReportFileName)
 
 # classifier.fit(train_x, train_y, batch_size= 16, nb_epochs= 10)

@@ -147,11 +147,11 @@ class AdversarialDataset(Dataset):
 
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
 # testfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_test.csv'
-trainfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train_012.csv'
-testfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_test_012.csv'
+trainfile = 'data/splits/isic2019/ISIC2019_train_012.csv'
+testfile = 'data/splits/isic2019/ISIC2019_test_012.csv'
 train_data_path = 'C:/Users/lkang/Documents/ISIC_2019_train/'
 test_data_path = 'C:/Users/lkang/Documents/ISIC_2019_test/'
-adversarialFile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_Adversarial_012.csv'
+adversarialFile = 'data/splits/isic2019/ISIC2019_Adversarial_012.csv'
 
 # Load the previously trained model
 num_classes = 3

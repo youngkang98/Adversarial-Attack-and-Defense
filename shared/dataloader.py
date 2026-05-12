@@ -640,11 +640,11 @@ class CSVDataset(data.Dataset):
         return len(self.data)
 
 def get_isic():
-    csv_path = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_labels.csv'
+    csv_path = 'data/splits/isic2019/ISIC2019_labels.csv'
     root_path = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/ISIC_2019_Training_Input/'
     dataset = CSVDataset(root=root_path, csv_file=csv_path, image_field='image', target_field='label',
                        add_extension='.jpg',
-                       split='C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/train0.txt')
+                       split='data/splits/isic2019/train0.txt')
     return dataset.data;
     
     
@@ -666,21 +666,21 @@ def get_dataloader(opt, train=True,set_ISIC2019='Train', pretensor_transform=Fal
     elif opt.dataset=='ISIC2019':
         # csv_path = '/media/userdisk1/yf/ISIC2019/ISIC2019_grandtruethlabels.csv'
         # root_path = '/media/userdisk1/yf/ISIC2019/ISIC_2019_Training_Input/'
-        csv_path = 'C:/Users/lkang/Documents/Master_Code_backup/txt/ISIC2019_grandtruethlabels.csv'
+        csv_path = 'data/splits/isic2019/ISIC2019_grandtruethlabels.csv'
         root_path = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
         if set_ISIC2019 == 'Train':
             dataset = CSVDataset(root=root_path, csv_file=csv_path, image_field='image', target_field='label',
                                transform=transform, add_extension='.jpg',
-                               split='C:/Users/lkang/Documents/Master_Code_backup/txt/train'+str(opt.split_idx)+'.txt')
+                               split='data/splits/isic2019/train'+str(opt.split_idx)+'.txt')
                                 # split='/media/userdisk1/yf/ISIC2019/txt/train'+str(opt.split_idx)+'.txt')
         elif set_ISIC2019 == 'Val':
             dataset = CSVDataset(root=root_path, csv_file=csv_path, image_field='image', target_field='label',
                                  transform=transform, add_extension='.jpg',
-                                 split='C:/Users/lkang/Documents/Master_Code_backup/txt/validation' + str(opt.split_idx) + '.txt')
+                                 split='data/splits/isic2019/validation' + str(opt.split_idx) + '.txt')
         elif set_ISIC2019 == 'Test':
             dataset=CSVDataset(root=root_path, csv_file=csv_path, image_field='image', target_field='label',
                               transform=transform, add_extension='.jpg',
-                              split='C:/Users/lkang/Documents/Master_Code_backup/txt/test' + str(opt.split_idx) + '.txt')
+                              split='data/splits/isic2019/test' + str(opt.split_idx) + '.txt')
         else:
             print ('Wrong set_ISIC2019',set_ISIC2019)
     elif opt.dataset=='Echo':

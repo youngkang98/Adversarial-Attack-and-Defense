@@ -274,8 +274,8 @@ model.eval()
 val_loss_no_noise, val_acc_no_noise, true_labels, pred_labels = evaluate(classifier, eval_loader, criterion, device,remap=remap)
 print(f"Without Noise after adv train - Val Loss: {val_loss_no_noise:.4f} - Val Acc: {val_acc_no_noise:.2f}%")
 plot_confusion_matrix(true_labels, pred_labels, "confusion_matrix_clean_after_advtrain")
-save_results_to_file("evaluation_result_after_adv_train.txt",val_loss_no_noise,val_acc_no_noise, 0, 0, 0,targeted=False)
-classificationReportFileName = 'classification_report_clean_after_advtrain.txt'
+save_results_to_file("results/isic/evaluation_result_after_adv_train.txt",val_loss_no_noise,val_acc_no_noise, 0, 0, 0,targeted=False)
+classificationReportFileName = 'results/isic/classification_report_clean_after_advtrain.txt'
 generate_classification_report(true_labels,pred_labels,classificationReportFileName)
 
 
