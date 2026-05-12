@@ -14,7 +14,7 @@ import os
 import numpy as np
 from PIL import Image
 import csv
-from dataloader import ISICDatasetTF, load_data
+from shared.dataloader import ISICDatasetTF, load_data
 
 # Model, optimizer, and loss definition
 optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
@@ -59,8 +59,8 @@ def evaluate(model, val_ds, criterion):
 
 # Dataset creation
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-csv_file_train = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_train.csv'
-csv_file_val = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_test.csv'
+csv_file_train = 'data/splits/isic2019/ISIC2019_train.csv'
+csv_file_val = 'data/splits/isic2019/ISIC2019_test.csv'
 
 train_dataset = ISICDatasetTF(datapath, csv_file_train, 'train').create_tf_dataset().batch(64).prefetch(tf.data.experimental.AUTOTUNE)
 val_dataset = ISICDatasetTF(datapath, csv_file_val, 'val').create_tf_dataset().batch(64).prefetch(tf.data.experimental.AUTOTUNE)

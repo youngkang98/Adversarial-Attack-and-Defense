@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 from art.utils import random_sphere
 
-from uap_utils import (get_foolingrate_rate, get_preds,
+from .covid_eval_framework import (get_foolingrate_rate, get_preds,
                        get_target_success_rate, make_adv_img, set_up,
                        show_confusion_matrix)
 

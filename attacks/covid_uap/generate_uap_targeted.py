@@ -3,7 +3,7 @@ import argparse
 import numpy as np
 from art.attacks import TargetedUniversalPerturbationRGB2Gray
 
-from uap_utils import (get_preds, get_target_success_rate, make_adv_img,
+from .covid_eval_framework import (get_preds, get_target_success_rate, make_adv_img,
                        set_up, show_confusion_matrix)
 
 parser = argparse.ArgumentParser(description='COVID-Net Evaluation')

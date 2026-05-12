@@ -11,7 +11,7 @@ import torchvision
 from torchvision.models import resnet50, inception_v3, Inception_V3_Weights, resnet18
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
-from dataloader import ISICDataset, get_transform
+from shared.dataloader import ISICDataset, get_transform
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 from art.defences.trainer import AdversarialTrainerFBFPyTorch,AdversarialTrainerMadryPGD
@@ -29,7 +29,7 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
-from PreActBottleNeck import PreActResNet50
+from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -82,8 +82,8 @@ def evaluate(classifier, loader, criterion, device, noise_tensor=None, add_noise
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -125,8 +125,8 @@ def evaluate_targeted_attack(classifier, loader, target_class, criterion, device
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -183,8 +183,8 @@ def generate_classification_report(true_labels, pred_labels,fileName):
 
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
 # testfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_test.csv'
-trainfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train.csv'
-testfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_test.csv'
+trainfile = 'data/splits/isic2019/ISIC2019_train.csv'
+testfile = 'data/splits/isic2019/ISIC2019_test.csv'
 train_data_path = 'C:/Users/lkang/Documents/ISIC_2019_train/'
 test_data_path = 'C:/Users/lkang/Documents/ISIC_2019_test/'
 # testfile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_test_02.csv'
@@ -192,7 +192,7 @@ test_data_path = 'C:/Users/lkang/Documents/ISIC_2019_test/'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_train_02.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_adversarial.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train.csv'
-adversarialFile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_Adversarial_012.csv'
+adversarialFile = 'data/splits/isic2019/ISIC2019_Adversarial_012.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_Adversarial_02.csv'
 
 # Load the previously trained model
@@ -615,14 +615,14 @@ for current_attack_eps in attack_eps:
                 print(f"With Noise {image_count} - Val Loss: {val_loss_with_noise:.4f} - Val Acc: {val_acc_with_noise:.2f}%")
 
             
-            resultFolder = 'ISIC2019/'
-            plot_confusion_matrix(true_labels, pred_labels, f'confusion_matrix_{image_count}_att{current_attack_eps}_eps{current_eps}')
+            resultFolder = 'results/isic/'
+            plot_confusion_matrix(true_labels, pred_labels, f'{resultFolder}confusion_matrix_{image_count}_att{current_attack_eps}_eps{current_eps}')
             
             
             # results_filename = resultFolder+f'evaluation_results_{image_count}_{iteration}.txt'
-            results_filename =f'evaluation_results_{image_count}_att{current_attack_eps}_eps{current_eps}.txt'
+            results_filename = f'{resultFolder}evaluation_results_{image_count}_att{current_attack_eps}_eps{current_eps}.txt'
             save_results_to_file(results_filename, val_loss_no_noise, val_acc_no_noise, val_loss_with_noise, val_acc_with_noise,success_rate,True)
             
-            classificationReportFileName = f'classification_report_{image_count}_att{current_attack_eps}_eps{current_eps}.txt'
+            classificationReportFileName = f'{resultFolder}classification_report_{image_count}_att{current_attack_eps}_eps{current_eps}.txt'
             generate_classification_report(true_labels,pred_labels,classificationReportFileName)
 

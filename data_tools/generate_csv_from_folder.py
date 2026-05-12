@@ -12,11 +12,11 @@ import pandas as pd
 
 def GenerateCSVBasedOnPercentage():
     # Load the CSV file
-    input_csv = '/mnt/data/OCT2017-train.csv'
+    input_csv = 'data/splits/oct2017/OCT2017-train.csv'
     df = pd.read_csv(input_csv)
     
     # Output CSV file
-    output_csv = '/mnt/data/OCT2017-train-adv-0.1.csv'
+    output_csv = 'data/splits/oct2017/OCT2017-train-adv-0.1.csv'
     
     # Define the percentage
     percentage = 0.1
@@ -39,7 +39,7 @@ def GenerateCSVBasedOnPercentage():
 root_dir = '../OCT2017/test'  # Update this path
 
 # Define the output CSV file
-output_csv = 'OCT2017-test.csv'
+output_csv = 'data/splits/oct2017/OCT2017-test.csv'
 
 # Dictionary to hold the count of images in each class
 class_counts = {}

@@ -293,8 +293,8 @@ def get_dataloader(opt, train=True,trainOrTestData='Train', pretensor_transform=
     elif opt.dataset == 'OCT':
         train_data_path = 'data/OCT/OCT2017_/train'
         test_data_path = 'data/OCT/OCT2017_/test'
-        testfile = 'data/OCT2017-test.csv'
-        trainFile = 'data/OCT2017-train.csv'
+        testfile = 'data/splits/oct2017/OCT2017-test.csv'
+        trainFile = 'data/splits/oct2017/OCT2017-train.csv'
         if trainOrTestData == 'Train':
             dataset = DatasetSeprateByClass(train_data_path, trainFile, 'train_data', transform=transform, one_hot_encode= False, num_classes=4)
         elif trainOrTestData == 'Test':
@@ -302,8 +302,8 @@ def get_dataloader(opt, train=True,trainOrTestData='Train', pretensor_transform=
     elif opt.dataset == 'CXRAY':
         train_data_path = 'C:/Users/lkang/Documents/chest_xray/train'
         test_data_path = 'C:/Users/lkang/Documents/chest_xray/test'
-        testfile = 'C:/Users/lkang/Documents/Github/Adversarial-Attack-and-Defense/CXRAY-test.csv'
-        trainFile = 'C:/Users/lkang/Documents/Github/Adversarial-Attack-and-Defense/CXRAY-train.csv'
+        testfile = 'data/splits/cxray/CXRAY-test.csv'
+        trainFile = 'data/splits/cxray/CXRAY-train.csv'
         if trainOrTestData == 'Train':
             dataset = DatasetSeprateByClass(train_data_path, trainFile, 'train_data', transform=transform, one_hot_encode= False, num_classes=2)
         elif trainOrTestData == 'Test':

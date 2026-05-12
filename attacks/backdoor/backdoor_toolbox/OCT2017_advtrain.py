@@ -29,7 +29,7 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
-from PreActBottleNeck import PreActResNet50
+from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -196,12 +196,12 @@ train_data_path = 'data/OCT/OCT2017_/train'
 test_data_path = 'data/OCT/OCT2017_/test'
 
 # trainfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train.csv'
-testfile = 'data/OCT2017-test.csv'
-trainFile = 'data/OCT2017-train.csv'
-adversarialFile = 'data/OCT2017-train.csv'
-noiseFile = 'data/OCT2017-train-adv-0.1.csv'
+testfile = 'data/splits/oct2017/OCT2017-test.csv'
+trainFile = 'data/splits/oct2017/OCT2017-train.csv'
+adversarialFile = 'data/splits/oct2017/OCT2017-train.csv'
+noiseFile = 'data/splits/oct2017/OCT2017-train-adv-0.1.csv'
 
-resultFolder = 'OCT2017_result/'
+resultFolder = 'results/oct2017/'
 # Load the previously trained model
 num_classes = 4
 # Number of images to use for noise generation

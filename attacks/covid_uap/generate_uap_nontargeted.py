@@ -4,7 +4,7 @@ import numpy as np
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 from art.defences.trainer import AdversarialTrainerFBFPyTorch,AdversarialTrainerMadryPGD
 
-from uap_utils import (get_foolingrate_rate, get_preds, make_adv_img, set_up,
+from .covid_eval_framework import (get_foolingrate_rate, get_preds, make_adv_img, set_up,
                        show_confusion_matrix)
 
 parser = argparse.ArgumentParser(description='COVID-Net Evaluation')

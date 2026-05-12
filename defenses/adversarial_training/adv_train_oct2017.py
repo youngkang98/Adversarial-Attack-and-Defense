@@ -11,7 +11,7 @@ import torchvision
 from torchvision.models import resnet50
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
-from dataloader import ISICDataset, get_transform, DatasetSeprateByClass
+from shared.dataloader import ISICDataset, get_transform, DatasetSeprateByClass
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 from art.defences.trainer import AdversarialTrainerFBFPyTorch,AdversarialTrainerMadryPGD
@@ -29,7 +29,7 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
-from PreActBottleNeck import PreActResNet50
+from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -195,12 +195,12 @@ datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
 train_data_path = '../OCT2017/train'
 test_data_path = '../OCT2017/test'
 
-trainfile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train.csv'
-testfile = 'OCT2017-test.csv'
-adversarialFile = 'OCT2017-train.csv'
-noiseFile = 'OCT2017-train-adv-0.1.csv'
+trainfile = 'data/splits/isic2019/ISIC2019_train.csv'
+testfile = 'data/splits/oct2017/OCT2017-test.csv'
+adversarialFile = 'data/splits/oct2017/OCT2017-train.csv'
+noiseFile = 'data/splits/oct2017/OCT2017-train-adv-0.1.csv'
 
-resultFolder = 'OCT2017_result/'
+resultFolder = 'results/oct2017/'
 # Load the previously trained model
 num_classes = 4
 # Number of images to use for noise generation

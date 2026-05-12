@@ -11,7 +11,7 @@ import torchvision
 from torchvision.models import resnet50
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
-from dataloader import ISICDataset, get_transform
+from shared.dataloader import ISICDataset, get_transform
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 from art.defences.trainer import AdversarialTrainerFBFPyTorch,AdversarialTrainerMadryPGD
@@ -29,7 +29,7 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent
-from PreActBottleNeck import PreActResNet50
+from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -87,8 +87,8 @@ def evaluate(classifier, loader, criterion, device, noise_tensor=None, add_noise
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -130,8 +130,8 @@ def evaluate_targeted_attack(classifier, loader, target_class, criterion, device
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -380,13 +380,13 @@ for current_attack_eps in attack_eps:
                     add_noise=True, remap=remap, eps_current=[current_attack_eps, current_eps], image_count=adv_image_count)
                 print(f"With Noise {adv_image_count} - Val Loss: {val_loss_with_noise:.4f} - Val Acc: {val_acc_with_noise:.2f}%")
             
-            resultFolder = 'ISIC2019/'
-            plot_confusion_matrix(true_labels, pred_labels, f'confusion_matrix_{adv_image_count}_att{current_attack_eps}_eps{current_eps}')
+            resultFolder = 'results/isic/'
+            plot_confusion_matrix(true_labels, pred_labels, f'{resultFolder}confusion_matrix_{adv_image_count}_att{current_attack_eps}_eps{current_eps}')
             
-            results_filename = f'evaluation_results_{adv_image_count}_att{current_attack_eps}_eps{current_eps}.txt'
+            results_filename = f'{resultFolder}evaluation_results_{adv_image_count}_att{current_attack_eps}_eps{current_eps}.txt'
             save_results_to_file(results_filename, val_loss_no_noise, val_acc_no_noise, val_loss_with_noise, val_acc_with_noise, success_rate, True)
             
-            classificationReportFileName = f'classification_report_{adv_image_count}_att{current_attack_eps}_eps{current_eps}.txt'
+            classificationReportFileName = f'{resultFolder}classification_report_{adv_image_count}_att{current_attack_eps}_eps{current_eps}.txt'
             generate_classification_report(true_labels, pred_labels, classificationReportFileName)
 
 

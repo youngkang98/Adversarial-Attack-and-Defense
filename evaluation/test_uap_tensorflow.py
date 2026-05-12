@@ -4,13 +4,13 @@ import cv2
 from keras.utils import np_utils
 from art.attacks.evasion import UniversalPerturbation
 from art.estimators.classification import TFV2Classifier
-from dataloader import load_data
+from shared.dataloader import load_data
 import tensorflow as tf
 
 # Step 1: Load the ISIC dataset
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-trainfile = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_train.csv'
-testfile = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_test.csv'
+trainfile = 'data/splits/isic2019/ISIC2019_train.csv'
+testfile = 'data/splits/isic2019/ISIC2019_test.csv'
 (x_train, y_train), (x_test, y_test), min_pixel_value, max_pixel_value = load_data(datapath, trainfile, testfile)
 
 # Load the trained TensorFlow model

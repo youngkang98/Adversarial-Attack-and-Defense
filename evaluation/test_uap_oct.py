@@ -10,7 +10,7 @@ import torch.nn as nn
 from torchvision.models import resnet50
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
-from dataloader import ISICDataset, OCTDataset
+from shared.dataloader import ISICDataset, OCTDataset
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 import numpy as np
@@ -70,8 +70,8 @@ def evaluate(classifier, loader, criterion, device, noise_tensor=None, add_noise
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'{current_dataset}/adv_img_att{eps_current[0]}eps{eps_current[1]}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'{current_dataset}/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/oct2017/adv_img_att{eps_current[0]}eps{eps_current[1]}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/oct2017/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -318,7 +318,7 @@ for current_attack_eps in attack_eps:
             # val_loss_with_noise, val_acc_with_noise, success_rate, true_labels, pred_labels = evaluate_targeted_attack(classifier, eval_loader, target_class, criterion, device, noise_tensor, add_noise=True)
             # print(f"With Noise {image_count} - Val Loss: {val_loss_with_noise:.4f} - Val Acc: {val_acc_with_noise:.2f}% - Succ Rate: {success_rate:.2f}%")
             
-            resultFolder = f'{current_dataset}/'
+            resultFolder = 'results/oct2017/'
             plot_confusion_matrix(true_labels, pred_labels, resultFolder+f'confusion_matrix_{image_count}_att{current_attack_eps}_eps{current_eps}')
             
             

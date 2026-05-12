@@ -11,7 +11,7 @@ import torchvision
 from torchvision.models import resnet50
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
-from dataloader import ISICDataset, get_transform
+from shared.dataloader import ISICDataset, get_transform
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 import numpy as np
@@ -70,8 +70,8 @@ def evaluate(classifier, loader, criterion, device, noise_tensor=None, add_noise
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -113,8 +113,8 @@ def evaluate_targeted_attack(classifier, loader, target_class, criterion, device
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())
@@ -170,12 +170,12 @@ def generate_classification_report(true_labels, pred_labels,fileName):
 # Parameters need to change
 
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-testfile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_test.csv'
+testfile = 'data/splits/isic2019/ISIC2019_test.csv'
 # testfile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_test_02.csv'
 # testfile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_test_old.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_train_02.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_adversarial.csv'
-adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_train.csv'
+adversarialFile = 'data/splits/isic2019/ISIC2019_train.csv'
 # adversarialFile = 'C:/Users/lkang/Documents/Master_Code_backup/New UAP/ISIC2019_Adversarial_02.csv'
 
 # Load the previously trained model
@@ -399,7 +399,7 @@ for current_attack_eps in attack_eps:
                 print(f"With Noise {image_count} - Val Loss: {val_loss_with_noise:.4f} - Val Acc: {val_acc_with_noise:.2f}%")
 
             
-            resultFolder = 'ISIC2019/'
+            resultFolder = 'results/isic/'
             plot_confusion_matrix(true_labels, pred_labels, resultFolder+f'confusion_matrix_{image_count}_att{current_attack_eps}_eps{current_eps}')
             
             

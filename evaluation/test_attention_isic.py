@@ -11,7 +11,7 @@ import torchvision
 from torchvision.models import resnet50
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader, Dataset
-from dataloader import ISICDataset, get_transform
+from shared.dataloader import ISICDataset, get_transform
 from art.estimators.classification import PyTorchClassifier
 from art.attacks.evasion import UniversalPerturbation,TargetedUniversalPerturbation
 from art.defences.trainer import AdversarialTrainerFBFPyTorch,AdversarialTrainerMadryPGD
@@ -29,7 +29,7 @@ from utils.data import psnr
 
 from art.defences.trainer import AdversarialTrainer
 from art.attacks.evasion import FastGradientMethod, ProjectedGradientDescent,DeepFool
-from PreActBottleNeck import PreActResNet50
+from shared.model_architectures import PreActResNet50
 
 import torchvision.datasets as datasets
 
@@ -88,8 +88,8 @@ def evaluate(classifier, loader, criterion, device, noise_tensor=None, add_noise
                 adv_img_np = np.transpose(adv_img.cpu().numpy(), (1, 2, 0))
                 
                 if first_image:
-                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'ISIC2019/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
-                    psnr(clean_image_np, adv_img_np,f'ISIC2019/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
+                    make_adv_img(clean_image_for_psnr,noise_tensor,adv_img,f'results/isic/adv_img_att{eps_current[0]}eps{eps_current[1]}_{image_count}.jpg')
+                    psnr(clean_image_np, adv_img_np,f'results/isic/psnr_att{eps_current[0]}_eps{eps_current[1]}.txt')
                     first_image = False
 
             outputs = classifier.predict(images.cpu().numpy())

@@ -15,7 +15,7 @@ import numpy as np
 
 from art.attacks.evasion import UniversalPerturbation
 from art.estimators.classification import PyTorchClassifier
-from dataloader import load_data, load_data_without_train
+from shared.dataloader import load_data, load_data_without_train
 from torchvision import models
 import torch
 import torch.nn as nn
@@ -27,8 +27,8 @@ gc.collect()
 
 # Step 1: Load the MNIST dataset
 datapath= 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-trainfile = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_train.csv'
-testfile = 'C:/Users/lkang/Documents/Master_Code_backup/Master_Code_backup/New UAP/ISIC2019_test.csv'
+trainfile = 'data/splits/isic2019/ISIC2019_train.csv'
+testfile = 'data/splits/isic2019/ISIC2019_test.csv'
 # (x_train, y_train), (x_test, y_test), min_pixel_value, max_pixel_value, mean_l2_train, mean_inf_train = load_data(datapath, trainfile, testfile)
 (x_test, y_test), min_pixel_value, max_pixel_value, mean_l2_train, mean_inf_train = load_data_without_train(datapath, testfile)
 print(mean_inf_train)

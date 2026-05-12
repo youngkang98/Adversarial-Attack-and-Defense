@@ -17,8 +17,8 @@ from art.defences.trainer import AdversarialTrainerOAATPyTorch
 from art.utils import load_cifar10
 from art.attacks.evasion import ProjectedGradientDescent
 
-from dataloader import ISICDataset
-from Utils import plot_confusion_matrix, generate_classification_report
+from shared.dataloader import ISICDataset
+from shared.evaluation_utils import plot_confusion_matrix, generate_classification_report
 from torchvision.models import resnet50
 
 
@@ -151,13 +151,13 @@ transform = transforms.Compose(
 )
 
 datapath = 'C:/Users/lkang/Documents/ISIC_2019_Training_Input/'
-adversarialFile = 'C:/Users/lkang/Documents/New UAP/ISIC2019_train.csv'
+adversarialFile = 'data/splits/isic2019/ISIC2019_train.csv'
 # dataset = CIFAR10_dataset(x_train, y_train, transform=transform)
 dataset = ISICDataset(datapath, adversarialFile, 'test_data', transform=transform,one_hot_encode= True, num_classes=num_classes)
 dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
 data_length = len(dataset)
 
-test_file = 'C:/Users/lkang/Documents/New UAP/ISIC2019_test.csv'
+test_file = 'data/splits/isic2019/ISIC2019_test.csv'
 test_dataset = ISICDataset(datapath, test_file, 'test_data', transform=transform,one_hot_encode= True, num_classes=num_classes)
 test_dataloader = DataLoader(test_dataset, batch_size=128, shuffle=True)
 x_test,y_test = test_dataset[0:]
